@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>intxractiv.bio</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
     body {
-      margin: 0;
       font-family: 'Courier New', monospace;
-      background: linear-gradient(145deg, #004d40, #1de9b6); /* Gradient background */
-      color: #fff;
+      background-color: #121212;
+      color: #ccc;
+      margin: 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -20,65 +19,53 @@
     }
 
     h1 {
-      font-size: 4rem;
-      margin-bottom: 3rem;
+      font-size: 3rem;
+      margin-bottom: 20px;
       color: #fff;
-      text-transform: uppercase;
     }
 
-    .buttons-container {
+    .button-container {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 15px;
     }
 
     .button {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background-color: #333;
+      border: 2px solid #66aaff;
+      color: #66aaff;
+      padding: 15px 30px;
       font-size: 1.5rem;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
+      font-weight: bold;
+      border-radius: 12px;
+      text-decoration: none;
       transition: all 0.3s ease;
     }
 
     .button:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
+      background-color: #66aaff;
+      color: #fff;
     }
 
     .footer {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
-      font-size: 0.8rem;
-      color: #bbb;
-    }
-
-    .footer a {
-      color: #bbb;
-      text-decoration: none;
+      bottom: 20px;
+      left: 20px;
+      font-size: 0.9rem;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-
   <h1>intxractiv.bio</h1>
-
-  <div class="buttons-container">
-    <button class="button" onclick="window.location.href='/goober'">Goober's Page</button>
-    <button class="button" onclick="window.location.href='https://intxractiv.bio/eno'">Eno's Page</button>
+  <div class="button-container">
+    <a href="/goober" class="button">Goober's Page</a>
+    <a href="/eno" class="button">Eno's Page</a>
+    <a href="/twisted" class="button">Twisted the Femboy</a>
   </div>
 
   <div class="footer">
-    <p>&copy; <span id="year"></span> <a href="https://intxractiv.bio" target="_blank">Intxractiv.bio</a>: All Rights Reserved</p>
+    <p>© Intxractiv.bio: All Rights Reserved</p>
   </div>
-
-  <script>
-    // Set current year dynamically
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  
 </body>
 </html>
