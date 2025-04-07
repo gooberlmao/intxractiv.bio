@@ -1,1 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eno</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+      color: #ccc;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .container {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      height: 100vh;
+    }
+
+    .section {
+      background: rgba(20, 20, 20, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease;
+    }
+
+    .top-panel:hover {
+      transform: perspective(800px) rotateX(2deg) rotateY(2deg);
+    }
+
+    #discord-section {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    #bio-section {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+      position: relative;
+    }
+
+    #bio-section.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9;
+      padding: 2rem;
+      background: rgba(10, 10, 10, 0.95);
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #close-bio {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    #links-section {
+      grid-column: 1 / 3;
+      grid-row: 2 / 3;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+    }
+
+    #name {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+
+    #bio-content {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #ddd;
+      overflow: hidden;
+    }
+
+    #expand-bio {
+      background: none;
+      color: #66aaff;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .icon-button {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1.5rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .icon-button:hover {
+      background: #1a1f2b;
+      transform: scale(1.1);
+      color: #fff;
+    }
+
+    #music-controls {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #music-controls button, #music-controls input {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    #volume-slider {
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="splash" onclick="enterSite()">click to enter</div>
+  <div class="container" style="display:none">
+    <div id="discord-section" class="section top-panel">
+      <img class="avatar" src="https://cdn.discordapp.com/avatars/1336730541134970950/6ebbd7f6d40becc668c70fd1183ff6ed.png?size=512" alt="Avatar" />
+      <div id="name">eno</div>
+    </div>
+
+    <div id="bio-section" class="section top-panel">
+      <h3>About Me</h3>
+      <div id="bio-content">I'm actually mad chill once you get to know me 😎</div>
+      <button id="expand-bio" onclick="expandBio()"><i class="fas fa-expand"></i></button>
+      <button id="close-bio" onclick="closeBio()" style="display:none">&times;</button>
+    </div>
+
+    <div id="links-section" class="section">
+      <div class="icon-button" onclick="window.open('https://fedding.xyz/')" title="Fedding">
+        <i class="fas fa-globe"></i>
+      </div>
+      <div class="icon-button" onclick="window.open('https://onimai.pro/')" title="Onimai">
+        <i class="fas fa-globe"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('0xdDD879E821f82b25124075aF489EC3ECaDC4273F')" title="Copy ETH">
+        <i class="fab fa-ethereum"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('bc1qk39tqnktgvsgu7xfgweveshkrzk6hadjc9apyw')" title="Copy BTC">
+        <i class="fab fa-btc"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('Ld9PFtR9sMGUSVfPUS3ufEJpMutgX8vigo')" title="Copy LTC">
+        <i class="fas fa-database"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('https://cdn.discordapp.com/avatars/1336730541134970950/6ebbd7f6d40becc668c70fd1183ff6ed.png?size=512')" title="Copy XMR">
+        <i class="fas fa-coins"></i>
+      </div>
+    </div>
+
+    <div id="music-controls">
+      <button onclick="togglePlay()" id="playPause"><i class="fas fa-pause"></i></button>
+      <input id="volume-slider" type="range" min="0" max="1" step="0.01" onchange="setVolume(this.value)" />
+    </div>
+
+    <audio id="audio" src="https://cdn.jsdelivr.net/gh/gooberlmao/intxractiv.bio@main/King%20Von%20-%20Crazy%20Story%20X%20Montagem%20Lunar%20Diamante%20Mashup%20(Anti%20Piracy%20Screen)%20Full%20Slow%20Reverb.mp3" autoplay></audio>
+  </div>
+
+  <script>
+    function enterSite() {
+      document.getElementById("splash").style.display = "none";
+      document.querySelector(".container").style.display = "grid";
+      document.getElementById("audio").play();
+    }
+
+    function expandBio() {
+      const bio = document.getElementById('bio-section');
+      bio.classList.add('fullscreen');
+      document.getElementById('close-bio').style.display = 'block';
+    }
+
+    function closeBio() {
+      const bio = document.getElementById('bio-section');
+      bio.classList.remove('fullscreen');
+      document.getElementById('close-bio').style.display = 'none';
+    }
+
+    function copyIcon(text) {
+      navigator.clipboard.writeText(text);
+      alert('Copied to clipboard!');
+    }
+
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPause');
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      } else {
+        audio.pause();
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+      }
+    }
+
+    function setVolume(val) {
+      audio.volume = val;
+    }
+  </script>
+</body>
+</html>
 
