@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>intxractiv.bio</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(145deg, #004d40, #1de9b6); /* Gradient background */
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 3rem;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .button {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 0.8rem;
+      color: #bbb;
+    }
+
+    .footer a {
+      color: #bbb;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>intxractiv.bio</h1>
+
+  <div class="buttons-container">
+    <button class="button" onclick="window.location.href='https://intxractiv.bio/goober'">goober</button>
+    <button class="button" onclick="window.location.href='https://intxractiv.bio/eno'">eno</button>
+  </div>
+
+  <div class="footer">
+    <p>&copy; <span id="year"></span> <a href="https://intxractiv.bio" target="_blank">Intxractiv.bio</a>: All Rights Reserved</p>
+  </div>
+
+  <script>
+    // Set current year dynamically
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  
+</body>
+</html>
