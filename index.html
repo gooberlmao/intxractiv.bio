@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>goober</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(145deg, #0a0a0f, #0e1a2b);
+      color: #ccc;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .section {
+      background: rgba(20, 20, 30, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    #discord-section {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    #bio-section {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+    }
+
+    #links-section {
+      grid-column: 1 / 3;
+      grid-row: 2 / 3;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+    }
+
+    #name {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+
+    #bio-content {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #ddd;
+      max-height: 4.5rem;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    #bio-section.expanded #bio-content {
+      max-height: 400px;
+    }
+
+    .bio-toggle {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #66aaff;
+      background: none;
+      border: none;
+    }
+
+    .icon-button {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1.5rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .icon-button:hover {
+      background: #1a1f2b;
+      transform: scale(1.1);
+      color: #fff;
+    }
+
+    /* Music player hidden */
+    audio {
+      display: none;
+    }
+
+    /* Music control UI */
+    .music-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .music-controls button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .music-controls button:hover {
+      background: #333;
+      transform: scale(1.1);
+    }
+
+    .volume-slider {
+      width: 100px;
+      background: #444;
+      border-radius: 8px;
+      height: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .volume-slider input {
+      width: 100%;
+      background: #555;
+      border-radius: 8px;
+      height: 6px;
+      cursor: pointer;
+    }
+
+    /* Mouse hover reactions for top panels only */
+    #discord-section:hover,
+    #bio-section:hover,
+    #links-section:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="discord-section" class="section">
+    <img id="avatar" class="avatar" src="https://cdn.discordapp.com/avatars/1137000332040355870/14a0a1aeedf0ddf220ca255470f35e1f.png?size=512" alt="Avatar">
+    <div id="name"></div>
+  </div>
+
+  <div id="bio-section" class="section">
+    <h3>About Me</h3>
+    <div id="bio-content">
+      I'm goober, digital ghost and code conjurer. Sometimes I nap, sometimes I deploy weird ideas into the void. Welcome to my corner of the internet.
+    </div>
+    <button class="bio-toggle" id="toggle-bio"><i class="fas fa-chevron-down"></i></button>
+  </div>
+
+  <div id="links-section" class="section">
+    <div class="icon-button" onclick="window.open('https://steamcommunity.com/profiles/76561199734325715/')" title="Steam">
+      <i class="fab fa-steam"></i>
+    </div>
+    <div class="icon-button" onclick="window.open('https://discord.com/users/1137000332040355870')" title="Discord">
+      <i class="fab fa-discord"></i>
+    </div>
+    <div class="icon-button" onclick="copyIcon('0x44476e007ebE9b0C904a6162738A3fc0dFD17676')" title="Copy ETH">
+      <i class="fab fa-ethereum"></i>
+    </div>
+    <div class="icon-button" onclick="copyIcon('47DhEGz5GoMNBvAf7NCfokhmtiD5aesZG95pdgLtFysKiTb8zBZ9Ug3crEv4ZgjkaaMjMGU8Jsq5Yj1YpwqypBSJLYbdC8c')" title="Copy XMR">
+      <i class="fas fa-coins"></i>
+    </div>
+    <div class="icon-button" onclick="copyIcon('bc1q4lreuq9gmxlykd2qz64pls08756ygrz7v74tzn')" title="Copy BTC">
+      <i class="fab fa-btc"></i>
+    </div>
+    <div class="icon-button" onclick="copyIcon('LWhsJ2TwGh1KLXB3s7dz5MLihWUo3ur14c')" title="Copy LTC">
+      <i class="fas fa-database"></i>
+    </div>
+    <div class="icon-button" onclick="copyIcon('5pLdVwrpo9XX5acGSfP9L7c6MrCWorSj5KW2jfFHCV4g')" title="Copy SOL">
+      <i class="fas fa-solar-panel"></i>
+    </div>
+  </div>
+
+  <!-- Music Section with controls -->
+  <div class="music-controls" id="musicControls">
+    <button id="playPauseBtn">
+      <i class="fas fa-play"></i>
+    </button>
+    <div class="volume-slider">
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </div>
+
+  <!-- Music -->
+  <audio id="audioPlayer" autoplay loop>
+    <source src="https://github.com/gooberlmao/intxractiv.bio/raw/main/SpotiDownloader.com%20-%20whatashame%20-%20_3'sfrmafghanistan.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    let isPlaying = false;
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const volumeControl = document.getElementById('volumeControl');
+    const nameEl = document.getElementById('name');
+    const bioContent = document.getElementById('bio-content');
+
+    // Typewriter effect for name
+    function typeWriter(text, i = 0) {
+      if (i < text.length) {
+        nameEl.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(text, i + 1), 100);
+      }
+    }
+
+    // Initialize typewriter effect
+    typeWriter("goober");
+
+    // Toggle play/pause on button click
+    playPauseBtn.addEventListener('click', () => {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+        isPlaying = true;
+      } else {
+        audioPlayer.pause();
+        playPauseBtn.innerHTML = `<i class="fas fa-play"></i>`;
+        isPlaying = false;
+      }
+    });
+
+    // Adjust volume based on slider input
+    volumeControl.addEventListener('input', () => {
+      audioPlayer.volume = volumeControl.value;
+    });
+
+    // Bio toggle expand
+    document.getElementById('toggle-bio').addEventListener('click', () => {
+      bioContent.classList.toggle('expanded');
+      if (bioContent.classList.contains('expanded')) {
+        document.getElementById('toggle-bio').innerHTML = `<i class="fas fa-chevron-up"></i>`;
+      } else {
+        document.getElementById('toggle-bio').innerHTML = `<i class="fas fa-chevron-down"></i>`;
+      }
+    });
+
+    // Copy crypto wallet to clipboard
+    function copyIcon(text) {
+      navigator.clipboard.writeText(text);
+      alert('Copied to clipboard!');
+    }
+
+    // Mouse hover interaction for top panels only
+    document.getElementById('discord-section').addEventListener('mouseenter', () => {
+      document.getElementById('discord-section').classList.add('hovered');
+    });
+    document.getElementById('discord-section').addEventListener('mouseleave', () => {
+      document.getElementById('discord-section').classList.remove('hovered');
+    });
+
+    document.getElementById('bio-section').addEventListener('mouseenter', () => {
+      document.getElementById('bio-section').classList.add('hovered');
+    });
+    document.getElementById('bio-section').addEventListener('mouseleave', () => {
+      document.getElementById('bio-section').classList.remove('hovered');
+    });
+  </script>
+</body>
+</html>
 
