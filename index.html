@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>goober</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goober</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
     body {
       margin: 0;
       font-family: 'Courier New', monospace;
-      background: linear-gradient(145deg, #0a0a0f, #0e1a2b);
+      background: linear-gradient(145deg, #004d40, #1de9b6); /* Updated Gradient */
       color: #ccc;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .container {
       display: grid;
       grid-template-rows: 1fr auto;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
       padding: 1.5rem;
       box-sizing: border-box;
+      height: 100vh;
     }
 
     .section {
-      background: rgba(20, 20, 30, 0.7);
+      background: rgba(20, 20, 20, 0.7);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 1rem;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease;
+    }
+
+    .top-panel:hover {
+      transform: perspective(800px) rotateX(2deg) rotateY(2deg);
     }
 
     #discord-section {
@@ -36,6 +62,32 @@
     #bio-section {
       grid-column: 2 / 3;
       grid-row: 1 / 2;
+      position: relative;
+    }
+
+    #bio-section.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9;
+      padding: 2rem;
+      background: rgba(10, 10, 10, 0.95);
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #close-bio {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
     }
 
     #links-section {
@@ -45,7 +97,7 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 1.5rem;
-      padding: 2rem 1rem;
+      padding: 1rem;
     }
 
     .avatar {
@@ -64,21 +116,15 @@
       font-size: 0.95rem;
       line-height: 1.5;
       color: #ddd;
-      max-height: 4.5rem;
       overflow: hidden;
-      transition: max-height 0.3s ease;
     }
 
-    #bio-section.expanded #bio-content {
-      max-height: 400px;
-    }
-
-    .bio-toggle {
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #66aaff;
+    #expand-bio {
       background: none;
+      color: #66aaff;
       border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
     }
 
     .icon-button {
@@ -96,192 +142,114 @@
       color: #fff;
     }
 
-    /* Music player hidden */
-    audio {
-      display: none;
-    }
-
-    /* Music control UI */
-    .music-controls {
+    #music-controls {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
       display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      align-items: center;
       flex-direction: column;
-      margin-top: 2rem;
-      transition: all 0.3s ease;
+      align-items: center;
+      gap: 0.5rem;
     }
-
-    .music-controls button {
-      background: rgba(255, 255, 255, 0.1);
+    #music-controls button, #music-controls input {
+      background: none;
       border: none;
       color: #fff;
-      padding: 1rem;
-      border-radius: 8px;
-      font-size: 2rem;
+      font-size: 1.5rem;
       cursor: pointer;
-      transition: 0.3s ease;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
-
-    .music-controls button:hover {
-      background: #333;
-      transform: scale(1.1);
-    }
-
-    .volume-slider {
+    #volume-slider {
       width: 100px;
-      background: #444;
-      border-radius: 8px;
-      height: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .volume-slider input {
-      width: 100%;
-      background: #555;
-      border-radius: 8px;
-      height: 6px;
-      cursor: pointer;
-    }
-
-    /* Mouse hover reactions for top panels only */
-    #discord-section:hover,
-    #bio-section:hover,
-    #links-section:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
 <body>
+  <div id="splash" onclick="enterSite()">click to enter</div>
+  <div class="container" style="display:none">
+    <div id="discord-section" class="section top-panel">
+      <img class="avatar" src="https://cdn.discordapp.com/avatars/1137000332040355870/14a0a1aeedf0ddf220ca255470f35e1f.png?size=512" alt="Avatar" />
+      <div id="name">Goober</div> <!-- Your Name -->
+    </div>
 
-  <div id="discord-section" class="section">
-    <img id="avatar" class="avatar" src="https://cdn.discordapp.com/avatars/1137000332040355870/14a0a1aeedf0ddf220ca255470f35e1f.png?size=512" alt="Avatar">
-    <div id="name"></div>
+    <div id="bio-section" class="section top-panel">
+      <h3>About Me</h3>
+      <div id="bio-content">Hi, I'm goober. I like indie rock and 1900s rock, preferably Green Day, Alex G, TV Girl, and some others. I hope to add more to this in the future.</div>
+      <button id="expand-bio" onclick="expandBio()"><i class="fas fa-expand"></i></button>
+      <button id="close-bio" onclick="closeBio()" style="display:none">&times;</button>
+    </div>
+
+    <div id="links-section" class="section">
+      <div class="icon-button" onclick="window.open('https://steamcommunity.com/profiles/76561199734325715/')" title="Steam">
+        <i class="fab fa-steam"></i>
+      </div>
+      <div class="icon-button" onclick="window.open('https://discord.com/users/1137000332040355870')" title="Discord">
+        <i class="fab fa-discord"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('0xdDD879E821f82b25124075aF489EC3ECaDC4273F')" title="Copy ETH">
+        <i class="fab fa-ethereum"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('bc1qk39tqnktgvsgu7xfgweveshkrzk6hadjc9apyw')" title="Copy BTC">
+        <i class="fab fa-btc"></i>
+      </div>
+      <div class="icon-button" onclick="copyIcon('Ld9PFtR9sMGUSVfPUS3ufEJpMutgX8vigo')" title="Copy LTC">
+        <i class="fas fa-database"></i>
+      </div>
+      <div class="icon-button" onclick="window.open('https://fedding.xyz/')" title="External Link">
+        <i class="fas fa-globe"></i>
+      </div>
+      <div class="icon-button" onclick="window.open('https://onimai.pro/')" title="Other Link">
+        <i class="fas fa-globe"></i>
+      </div>
+    </div>
+
+    <div id="music-controls">
+      <button onclick="togglePlay()" id="playPause"><i class="fas fa-pause"></i></button>
+      <input id="volume-slider" type="range" min="0" max="1" step="0.01" onchange="setVolume(this.value)" />
+    </div>
+
+    <audio id="audio" src="https://github.com/gooberlmao/intxractiv.bio/blob/main/SpotiDownloader.com%20-%20whatashame%20-%20_3'sfrmafghanistan.mp3" autoplay></audio>
   </div>
-
-  <div id="bio-section" class="section">
-    <h3>About Me</h3>
-    <div id="bio-content">
-Hi, I'm goober. I like indie rock and 1900s rock, preferrably Green Day, Alex G, TV Girl, and some others. I hope to add more to this in the future.
-    </div>
-    <button class="bio-toggle" id="toggle-bio"><i class="fas fa-chevron-down"></i></button>
-  </div>
-
-  <div id="links-section" class="section">
-    <div class="icon-button" onclick="window.open('https://steamcommunity.com/profiles/76561199734325715/')" title="Steam">
-      <i class="fab fa-steam"></i>
-    </div>
-    <div class="icon-button" onclick="window.open('https://discord.com/users/1137000332040355870')" title="Discord">
-      <i class="fab fa-discord"></i>
-    </div>
-    <div class="icon-button" onclick="copyIcon('0x44476e007ebE9b0C904a6162738A3fc0dFD17676')" title="Copy ETH">
-      <i class="fab fa-ethereum"></i>
-    </div>
-    <div class="icon-button" onclick="copyIcon('47DhEGz5GoMNBvAf7NCfokhmtiD5aesZG95pdgLtFysKiTb8zBZ9Ug3crEv4ZgjkaaMjMGU8Jsq5Yj1YpwqypBSJLYbdC8c')" title="Copy XMR">
-      <i class="fas fa-coins"></i>
-    </div>
-    <div class="icon-button" onclick="copyIcon('bc1q4lreuq9gmxlykd2qz64pls08756ygrz7v74tzn')" title="Copy BTC">
-      <i class="fab fa-btc"></i>
-    </div>
-    <div class="icon-button" onclick="copyIcon('LWhsJ2TwGh1KLXB3s7dz5MLihWUo3ur14c')" title="Copy LTC">
-      <i class="fas fa-database"></i>
-    </div>
-    <div class="icon-button" onclick="copyIcon('5pLdVwrpo9XX5acGSfP9L7c6MrCWorSj5KW2jfFHCV4g')" title="Copy SOL">
-      <i class="fas fa-solar-panel"></i>
-    </div>
-  </div>
-
-  <!-- Music Section with controls -->
-  <div class="music-controls" id="musicControls">
-    <button id="playPauseBtn">
-      <i class="fas fa-play"></i>
-    </button>
-    <div class="volume-slider">
-      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
-    </div>
-  </div>
-
-  <!-- Music -->
-  <audio id="audioPlayer" autoplay loop>
-    <source src="https://github.com/gooberlmao/intxractiv.bio/raw/main/SpotiDownloader.com%20-%20whatashame%20-%20_3'sfrmafghanistan.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
 
   <script>
-    let isPlaying = false;
-    const audioPlayer = document.getElementById('audioPlayer');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const volumeControl = document.getElementById('volumeControl');
-    const nameEl = document.getElementById('name');
-    const bioContent = document.getElementById('bio-content');
-
-    // Typewriter effect for name
-    function typeWriter(text, i = 0) {
-      if (i < text.length) {
-        nameEl.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, i + 1), 100);
-      }
+    function enterSite() {
+      document.getElementById("splash").style.display = "none";
+      document.querySelector(".container").style.display = "grid";
+      document.getElementById("audio").play();
     }
 
-    // Initialize typewriter effect
-    typeWriter("goober");
+    function expandBio() {
+      const bio = document.getElementById('bio-section');
+      bio.classList.add('fullscreen');
+      document.getElementById('close-bio').style.display = 'block';
+    }
 
-    // Toggle play/pause on button click
-    playPauseBtn.addEventListener('click', () => {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
-        isPlaying = true;
-      } else {
-        audioPlayer.pause();
-        playPauseBtn.innerHTML = `<i class="fas fa-play"></i>`;
-        isPlaying = false;
-      }
-    });
+    function closeBio() {
+      const bio = document.getElementById('bio-section');
+      bio.classList.remove('fullscreen');
+      document.getElementById('close-bio').style.display = 'none';
+    }
 
-    // Adjust volume based on slider input
-    volumeControl.addEventListener('input', () => {
-      audioPlayer.volume = volumeControl.value;
-    });
-
-    // Bio toggle expand
-    document.getElementById('toggle-bio').addEventListener('click', () => {
-      bioContent.classList.toggle('expanded');
-      if (bioContent.classList.contains('expanded')) {
-        document.getElementById('toggle-bio').innerHTML = `<i class="fas fa-chevron-up"></i>`;
-      } else {
-        document.getElementById('toggle-bio').innerHTML = `<i class="fas fa-chevron-down"></i>`;
-      }
-    });
-
-    // Copy crypto wallet to clipboard
     function copyIcon(text) {
       navigator.clipboard.writeText(text);
       alert('Copied to clipboard!');
     }
 
-    // Mouse hover interaction for top panels only
-    document.getElementById('discord-section').addEventListener('mouseenter', () => {
-      document.getElementById('discord-section').classList.add('hovered');
-    });
-    document.getElementById('discord-section').addEventListener('mouseleave', () => {
-      document.getElementById('discord-section').classList.remove('hovered');
-    });
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPause');
 
-    document.getElementById('bio-section').addEventListener('mouseenter', () => {
-      document.getElementById('bio-section').classList.add('hovered');
-    });
-    document.getElementById('bio-section').addEventListener('mouseleave', () => {
-      document.getElementById('bio-section').classList.remove('hovered');
-    });
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      } else {
+        audio.pause();
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+      }
+    }
+
+    function setVolume(val) {
+      audio.volume = val;
+    }
   </script>
 </body>
 </html>
-
