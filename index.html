@@ -7,66 +7,88 @@
   <style>
     body {
       font-family: 'Courier New', monospace;
-      background-color: #121212;
-      color: #ccc;
       margin: 0;
       height: 100vh;
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+      color: #fff;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
+      flex-direction: column;
     }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #fff;
-    }
-
-    .button-container {
+    .container {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
     }
 
     .button {
-      background-color: #333;
-      border: 2px solid #66aaff;
-      color: #66aaff;
-      padding: 15px 30px;
-      font-size: 1.5rem;
-      font-weight: bold;
+      background-color: #1a1a1a;
+      color: #ccc;
+      border: 2px solid #fff;
       border-radius: 12px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      text-transform: lowercase; /* Make all button text lowercase */
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      margin: 10px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: 0.3s;
     }
 
     .button:hover {
-      background-color: #66aaff;
-      color: #fff;
+      background-color: #444;
+      border-color: #66aaff;
+      color: #66aaff;
     }
 
-    .footer {
+    .discord-button {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      font-size: 0.9rem;
-      color: #aaa;
+      top: 20px;
+      right: 20px;
+      background-color: #7289da;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .discord-button:hover {
+      background-color: #5a6a97;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 0.8rem;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <h1>intxractiv.bio</h1>
-  <div class="button-container">
-    <a href="/goober" class="button">goober's page</a>
-    <a href="/eno" class="button">eno's page</a>
-    <a href="/twisted" class="button">twisted the femboy</a> <!-- Added the twisted button -->
+
+  <div class="container">
+    <div class="title">intxractiv.bio</div>
+    <button class="button" onclick="window.location.href='https://intxractiv.bio/goober'">goober</button>
+    <button class="button" onclick="window.location.href='https://intxractiv.bio/eno'">eno</button>
+    <button class="button" onclick="window.location.href='https://intxractiv.bio/twisted'">twisted the femboy</button>
   </div>
 
-  <div class="footer">
-    <p>© Intxractiv.bio: All Rights Reserved</p>
-  </div>
+  <button class="discord-button" onclick="window.open('https://discord.gg/xCdyEGVRcj', '_blank')">join our discord</button>
+
+  <footer>
+    <p>&copy; Intxractiv.bio: All Rights Reserved</p>
+  </footer>
+
 </body>
 </html>
