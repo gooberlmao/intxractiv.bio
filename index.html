@@ -73,6 +73,40 @@
       font-size: 0.8rem;
       color: #ccc;
     }
+
+    /* New Sponsor Section */
+    .sponsor-section {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .sponsor-section .sponsor-title {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .sponsor-button {
+      background-color: #1a1a1a;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 12px;
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sponsor-button:hover {
+      background-color: #444;
+      border-color: #66aaff;
+      color: #66aaff;
+    }
+
+    /* Move the sponsor section down */
+    .sponsor-section {
+      margin-top: 3rem;
+    }
   </style>
 </head>
 <body>
@@ -85,6 +119,12 @@
   </div>
 
   <button class="discord-button" onclick="window.open('https://discord.gg/xCdyEGVRcj', '_blank')">join our discord</button>
+
+  <!-- New Sponsor Section -->
+  <div class="sponsor-section">
+    <div class="sponsor-title">New Sponsor: Lunara for Animal Company</div>
+    <button class="sponsor-button" onclick="window.location.href='https://discord.gg/woostergames'">Lunara</button>
+  </div>
 
   <footer>
     <p>&copy; Intxractiv.bio: All Rights Reserved</p>
