@@ -22,12 +22,12 @@
 
     .container {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       width: 90%;
       max-width: 1400px;
-      height: 80%;
-      justify-content: space-between;
-      align-items: flex-start;
+      height: auto;
+      justify-content: center;
+      align-items: center;
       padding: 2rem;
       box-sizing: border-box;
       background: rgba(0, 0, 0, 0.7);
@@ -36,16 +36,15 @@
     }
 
     .video-container {
-      width: 48%;
+      width: 100%;
       background: rgba(0, 0, 0, 0.9);
       border-radius: 16px;
       padding: 1rem;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-      margin-right: 4%; /* Space between video and right section */
+      margin-bottom: 2rem;
     }
 
     .video-container video {
@@ -57,7 +56,7 @@
     .controls {
       margin-top: 1rem;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       width: 100%;
     }
 
@@ -70,6 +69,7 @@
       cursor: pointer;
       font-size: 1rem;
       transition: 0.3s;
+      margin: 0 0.5rem;
     }
 
     .controls button:hover {
@@ -77,7 +77,7 @@
     }
 
     .right-section {
-      width: 48%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -85,6 +85,7 @@
       padding: 2rem;
       border-radius: 16px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      margin-bottom: 2rem;
     }
 
     .right-section button {
@@ -134,7 +135,7 @@
 
     footer {
       position: absolute;
-      bottom: 40px;
+      bottom: 10px;
       left: 10px;
       font-size: 0.8rem;
       color: #ccc;
@@ -149,7 +150,6 @@
       height: auto;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-      z-index: 10;
     }
 
     /* Bottom text with Discord invite link */
@@ -167,18 +167,22 @@
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
-        height: auto;
+        padding: 1.5rem;
       }
 
       .video-container, .right-section {
         width: 100%;
-        margin-right: 0;
-        margin-bottom: 2rem;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: center;
       }
 
       .controls button {
         font-size: 1rem;
         padding: 0.5rem;
+        margin: 0.5rem 0;
       }
 
       .right-section button {
@@ -188,7 +192,7 @@
 
       .bottom-text {
         font-size: 2.5rem;
-        bottom: 130px; /* Adjust positioning */
+        bottom: 130px;
       }
     }
 
@@ -196,7 +200,7 @@
     @media (max-width: 480px) {
       .bottom-text {
         font-size: 2rem;
-        bottom: 120px; /* Move the bottom text slightly up */
+        bottom: 120px; /* Adjust position */
       }
 
       .socials a {
