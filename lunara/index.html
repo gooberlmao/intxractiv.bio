@@ -45,6 +45,7 @@
       justify-content: center;
       align-items: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      margin-right: 4%; /* Added space between video and right section */
     }
 
     .video-container video {
@@ -149,6 +150,17 @@
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
     }
+
+    /* New text at the bottom */
+    .bottom-text {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -190,6 +202,11 @@
 
   <!-- Lunara Logo -->
   <img src="https://github.com/gooberlmao/intxractiv.bio/raw/main/lunara/lunara%20logo.png" alt="Lunara Logo" class="logo">
+
+  <!-- Bottom Text with Discord Invite Link -->
+  <div class="bottom-text">
+    discord.gg/woostergames
+  </div>
 
   <script>
     // Video play/pause functionality
