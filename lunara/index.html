@@ -22,14 +22,14 @@
 
     .container {
       display: flex;
+      flex-wrap: wrap;
       width: 90%;
       max-width: 1400px;
       height: 80%;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       padding: 2rem;
       box-sizing: border-box;
-      flex-wrap: nowrap;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
@@ -45,7 +45,7 @@
       justify-content: center;
       align-items: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-      margin-right: 4%; /* Added space between video and right section */
+      margin-right: 4%; /* Space between video and right section */
     }
 
     .video-container video {
@@ -134,7 +134,7 @@
 
     footer {
       position: absolute;
-      bottom: 40px; /* Increased bottom margin to avoid overlap with the logo */
+      bottom: 40px;
       left: 10px;
       font-size: 0.8rem;
       color: #ccc;
@@ -149,18 +149,65 @@
       height: auto;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      z-index: 10;
     }
 
-    /* New text at the bottom */
+    /* Bottom text with Discord invite link */
     .bottom-text {
       position: absolute;
-      bottom: 80px; /* Increased space to avoid overlap with the logo */
+      bottom: 160px;
       width: 100%;
       text-align: center;
       font-size: 3rem;
       color: rgba(255, 255, 255, 0.6);
       font-weight: bold;
     }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .video-container, .right-section {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 2rem;
+      }
+
+      .controls button {
+        font-size: 1rem;
+        padding: 0.5rem;
+      }
+
+      .right-section button {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+      }
+
+      .bottom-text {
+        font-size: 2.5rem;
+        bottom: 130px; /* Adjust positioning */
+      }
+    }
+
+    /* Adjustments for small screens */
+    @media (max-width: 480px) {
+      .bottom-text {
+        font-size: 2rem;
+        bottom: 120px; /* Move the bottom text slightly up */
+      }
+
+      .socials a {
+        font-size: 1.2rem;
+      }
+
+      .bio {
+        font-size: 1rem;
+      }
+    }
+
   </style>
 </head>
 <body>
