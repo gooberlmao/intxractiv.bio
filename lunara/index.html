@@ -22,12 +22,12 @@
 
     .container {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       width: 90%;
       max-width: 1400px;
       height: auto;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+      align-items: flex-start;
       padding: 2rem;
       box-sizing: border-box;
       background: rgba(0, 0, 0, 0.7);
@@ -36,7 +36,7 @@
     }
 
     .video-container {
-      width: 100%;
+      width: 45%;
       background: rgba(0, 0, 0, 0.9);
       border-radius: 16px;
       padding: 1rem;
@@ -44,7 +44,6 @@
       justify-content: center;
       align-items: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-      margin-bottom: 2rem;
     }
 
     .video-container video {
@@ -77,15 +76,17 @@
     }
 
     .right-section {
-      width: 100%;
+      width: 45%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       background: rgba(0, 0, 0, 0.9);
       padding: 2rem;
       border-radius: 16px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-      margin-bottom: 2rem;
+      margin-left: 2rem;
+      max-height: 80%; /* To make sure it doesn't overflow */
+      overflow-y: auto;
     }
 
     .right-section button {
@@ -109,7 +110,7 @@
       display: flex;
       gap: 2rem;
       margin-top: 2rem;
-      justify-content: center;
+      justify-content: flex-start;
       width: 100%;
     }
 
@@ -129,8 +130,10 @@
       margin-top: 2rem;
       font-size: 1.2rem;
       line-height: 1.6;
-      text-align: center;
+      text-align: left;
       color: #ccc;
+      max-height: 400px; /* Give more space for the bio */
+      overflow-y: auto;
     }
 
     footer {
@@ -241,7 +244,7 @@
 
       <!-- Bio Section -->
       <div class="bio">
-        <p>Lunara is a hub for high-quality made metadata mods for Animal Company. We come from a wide range of talented developers and known-cheaters. Join us in creating the next generation of mods and enjoy a community dedicated to enhancing gameplay.</p>
+        <p>Lunara is a hub for high-quality made metadata mods for Animal Company. We come from a wide range of talented developers and known-cheaters. Join us in creating the next generation of mods and enjoy a community dedicated to enhancing gameplay. Our mods are designed with the goal of improving your experience in Animal Company, making the game more exciting and dynamic with every update.</p>
       </div>
     </div>
   </div>
