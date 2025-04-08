@@ -25,8 +25,8 @@
       flex-direction: row;
       width: 90%;
       max-width: 1400px;
-      height: 80%;
-      justify-content: flex-start; /* Move everything to the left */
+      height: 75%;
+      justify-content: flex-start;
       align-items: flex-start;
       padding: 2rem;
       box-sizing: border-box;
@@ -36,7 +36,8 @@
     }
 
     .video-container {
-      width: 60%; /* Make video bigger */
+      width: 70%;
+      height: 100%; /* Increase the height of the video container */
       background: rgba(0, 0, 0, 0.9);
       border-radius: 16px;
       padding: 1rem;
@@ -48,7 +49,7 @@
 
     .video-container video {
       width: 100%;
-      height: auto;
+      height: 100%; /* Make the video take up the full height */
       border-radius: 10px;
     }
 
@@ -76,7 +77,8 @@
     }
 
     .right-section {
-      width: 35%; /* Adjust right section size */
+      width: 28%;
+      height: 90%; /* Reduced height to move the bottom up */
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -85,7 +87,7 @@
       border-radius: 16px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
       margin-left: 2rem;
-      height: 100%;
+      justify-content: flex-start;
     }
 
     .right-section button {
@@ -159,7 +161,7 @@
     /* Bottom text with Discord invite link */
     .bottom-text {
       position: absolute;
-      bottom: 160px;
+      bottom: 40px;
       width: 100%;
       text-align: center;
       font-size: 3rem;
@@ -172,6 +174,7 @@
       .container {
         flex-direction: column;
         padding: 1.5rem;
+        height: auto;
       }
 
       .video-container, .right-section {
@@ -197,7 +200,7 @@
 
       .bottom-text {
         font-size: 2.5rem;
-        bottom: 130px;
+        bottom: 20px;
       }
     }
 
@@ -205,7 +208,7 @@
     @media (max-width: 480px) {
       .bottom-text {
         font-size: 2rem;
-        bottom: 120px;
+        bottom: 10px;
       }
 
       .socials a {
@@ -222,7 +225,7 @@
 <body>
 
   <div class="container">
-    <!-- Left Section - Video Player -->
+    <!-- Left Section - Video Player and Discord Join -->
     <div class="video-container">
       <video id="videoPlayer" controls>
         <source src="https://github.com/gooberlmao/intxractiv.bio/raw/main/lunara/lunaratut.mp4" type="video/mp4" />
@@ -234,7 +237,6 @@
       </div>
     </div>
 
-    <!-- Right Section - Discord Join and Bio -->
     <div class="right-section">
       <button onclick="window.open('https://discord.gg/woostergames', '_blank')">Join the Lunara Discord</button>
 
